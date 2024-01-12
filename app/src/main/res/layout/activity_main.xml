@@ -10,17 +10,42 @@
         android:id="@+id/linearLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:layout_marginTop="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/sw_automate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="30dp"
+            android:layout_weight=".3"
+            android:text="@string/enable_automate" />
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight=".5" />
+
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/img_reload"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:padding="10dp"
+            android:layout_weight=".2"
+            app:srcCompat="@drawable/ic_baseline_refresh_24" />
+        <ImageView
+            android:id="@+id/img_connection_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:padding="10dp"
+            android:layout_weight=".2"
             app:srcCompat="@drawable/ic_disconnected" />
     </LinearLayout>
 
@@ -45,6 +70,8 @@
                 android:layout_marginTop="16dp"
                 android:text="Temperature"
                 android:textAlignment="center"
+                android:textSize="16sp"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -65,7 +92,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="-7 C"
+                android:text="-7 °C"
                 android:textAlignment="center"
                 android:textSize="24sp"
                 android:textStyle="bold"
@@ -73,7 +100,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
-            <Switch
+            <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/sw_temperature"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -102,7 +129,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="-7 C"
+                android:text="70 %"
                 android:textAlignment="center"
                 android:textSize="24sp"
                 android:textStyle="bold"
@@ -118,6 +145,8 @@
                 android:layout_marginTop="16dp"
                 android:text="Humidity"
                 android:textAlignment="center"
+                android:textSize="16sp"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.496"
                 app:layout_constraintStart_toStartOf="parent"
@@ -134,7 +163,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/tv_humidity"
                 app:srcCompat="@drawable/ic_air_24" />
 
-            <Switch
+            <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/sw_humidity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -187,6 +216,7 @@
                 android:textAlignment="center"
                 android:textSize="24sp"
                 android:textStyle="bold"
+                android:visibility="invisible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -199,6 +229,8 @@
                 android:layout_marginTop="16dp"
                 android:text="Light"
                 android:textAlignment="center"
+                android:textSize="16sp"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.496"
                 app:layout_constraintStart_toStartOf="parent"
@@ -215,7 +247,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/tv_light"
                 app:srcCompat="@drawable/ic_light" />
 
-            <Switch
+            <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/sw_light"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -228,4 +260,13 @@
                 app:layout_constraintTop_toBottomOf="@+id/img_light" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_error"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="parent"></LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

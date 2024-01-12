@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Smart_Home_Controller_Pine64</string>
+    <string name="enable_automate">Enable Automate</string>
 </resources>

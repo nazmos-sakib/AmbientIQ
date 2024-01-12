@@ -3,12 +3,12 @@ plugins {
 }
 
 android {
-    compileSdk 32
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.example.smart_home_controller_pine64"
         minSdk 24
-        targetSdk 32
+        targetSdk 34
         versionCode 1
         versionName "1.0"
 
@@ -24,6 +24,10 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    buildFeatures {
+        viewBinding = true
     }
 }
 
