@@ -1,4 +1,5 @@
 <resources>
-    <string name="app_name">Smart_Home_Controller_Pine64</string>
+    <string name="app_name">AmbientIQ</string>
+    <string name="app_name1">Smart_Home_Controller_Pine64</string>
     <string name="enable_automate">Enable Automate</string>
 </resources>
