@@ -14,4 +14,16 @@
         <item name="android:statusBarColor" tools:targetApi="l">#274B28</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="NavDrawer" >
+    </style>
+
+    <style name="NavDrawer.TxtView" >
+        <item name="android:drawablePadding">10dp</item>
+        <item name="android:textColor">@color/green</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_marginTop"> 6dp </item>
+        <item name="android:layout_marginBottom"> 6dp </item>
+    </style>
 </resources>

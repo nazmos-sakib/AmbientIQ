@@ -3,6 +3,8 @@ package com.example.smart_home_controller_pine64;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
@@ -10,6 +12,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.NumberPicker;
@@ -22,6 +25,7 @@ import com.google.android.material.snackbar.Snackbar;
 import org.json.JSONException;
 
 import java.net.MalformedURLException;
+import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
@@ -48,6 +52,11 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        //for setting app to full screen
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        Objects.requireNonNull(getSupportActionBar()).hide();
+
+
         initViewsOnClickListener();
     }
 
@@ -71,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
         isConnectedToBL602 =
                 Devices.checkLedStatus(ledStatusUrl) != null;
 
-        binding.imgConnectionStatus.setImageDrawable(
+        binding.includeToolbox.imgConnectionStatus.setImageDrawable(
                 isConnectedToBL602?
                         AppCompatResources.getDrawable(getApplicationContext(),R.drawable.ic_connected) :
                         AppCompatResources.getDrawable(getApplicationContext(),R.drawable.ic_disconnected)
@@ -81,7 +90,12 @@ public class MainActivity extends AppCompatActivity {
 
     @SuppressLint("SetTextI18n")
     void initViewsOnClickListener(){
-        binding.imgReload.setOnClickListener(View->{
+        //app drawer setup
+        binding.includeToolbox.menuToolbox.setOnClickListener(View->{
+            openDrawer(binding.parentDrawerLayout);
+        });
+
+        binding.includeToolbox.imgReload.setOnClickListener(View->{
             recreate();
         });
 
@@ -146,13 +160,13 @@ public class MainActivity extends AppCompatActivity {
             Devices.setViewsAccordingToStatus(
                     Devices.checkLedStatus(ledStatusUrl),
                     binding);
-            binding.imgConnectionStatus.setImageDrawable(getDrawable(R.drawable.ic_connected));
+            binding.includeToolbox.imgConnectionStatus.setImageDrawable(getDrawable(R.drawable.ic_connected));
 
         } catch (MalformedURLException | JSONException | NullPointerException | ExecutionException | InterruptedException | DisconnectedException e) {
             //exception for
             e.printStackTrace();
             if (e instanceof DisconnectedException){
-                binding.imgConnectionStatus.setImageDrawable(getDrawable(R.drawable.ic_disconnected));
+                binding.includeToolbox.imgConnectionStatus.setImageDrawable(getDrawable(R.drawable.ic_disconnected));
                 snackBarMessage(e.getMessage());
             }
             snackBarMessage(e.getMessage());
@@ -217,6 +231,16 @@ public class MainActivity extends AppCompatActivity {
         });
 
         dialogNumberPicker.show();
+    }
+
+    private void openDrawer(DrawerLayout drawerLayout){
+        drawerLayout.openDrawer(GravityCompat.START);
+    }
+
+    private void closeDrawer(DrawerLayout drawerLayout){
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)){
+            drawerLayout.closeDrawer(GravityCompat.START);
+        }
     }
 
 }
