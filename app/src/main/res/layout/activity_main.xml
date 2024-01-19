@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/parentDrawerLayout"
+    android:background="?attr/colorControlHighlight"
     tools:context=".MainActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -379,10 +380,10 @@
         android:layout_gravity="start"
         android:background="@color/white"
         >
+
         <include
-            layout="@layout/nav_drawer"
             android:id="@+id/include_nav_drawer"
-            />
+            layout="@layout/nav_drawer" />
 
     </RelativeLayout>
 </androidx.drawerlayout.widget.DrawerLayout>

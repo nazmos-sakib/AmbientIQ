@@ -26,10 +26,10 @@ public class Devices {
 
         //temperature
         binding.swTemperature.setChecked(
-                jsonObject.getInt("led_red")==0);
+                jsonObject.getInt("led_red")==1);
         binding.imgTemperature.setColorFilter(Color.rgb(
                 0,
-                jsonObject.getInt("led_red")==0? 255: 0,
+                jsonObject.getInt("led_red")==1? 255: 0,
                 0
         ));
         binding.tvTemperature.setText(
@@ -38,10 +38,10 @@ public class Devices {
 
         //humidity
         binding.swHumidity.setChecked(
-                jsonObject.getInt("led_green")==0);
+                jsonObject.getInt("led_green")==1);
         binding.imgHumidity.setColorFilter(Color.rgb(
                 0,
-                jsonObject.getInt("led_green")==0? 255: 0,
+                jsonObject.getInt("led_green")==1? 255: 0,
                 0
         ));
         binding.tvHumidity.setText(
@@ -50,10 +50,10 @@ public class Devices {
 
         //light
         binding.swLight.setChecked(
-                jsonObject.getInt("led_blue")==0);
+                jsonObject.getInt("led_blue")==1);
         binding.imgLight.setColorFilter(Color.rgb(
                 0,
-                jsonObject.getInt("led_blue")==0? 255: 0,
+                jsonObject.getInt("led_blue")==1? 255: 0,
                 0
         ));
 

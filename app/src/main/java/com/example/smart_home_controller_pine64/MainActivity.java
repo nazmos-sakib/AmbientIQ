@@ -7,8 +7,12 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
+import android.net.wifi.SupplicantState;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -64,17 +68,44 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         try {
-            checkConnectionWithBl602();
+            //checkConnectionWithBl602();
 
         } catch (Exception e){
             snackBarMessage(e.getMessage());
         }
 
+        WifiManager wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
+        WifiInfo wifiInfo;
+
+        wifiInfo = wifiManager.getConnectionInfo();
+        if (wifiInfo.getSupplicantState() == SupplicantState.COMPLETED) {
+            System.out.println("------------------------------------"+wifiInfo.getSSID());
+            checkWifiStatus(
+                    wifiInfo.getSSID().equals("\"BL602_AP\""));
+        } else snackBarMessage("Not Connected to WIFI");
+
         //check led status
-        checkLedStatus();
+        //checkLedStatus();
     }
 
 
+
+    void checkWifiStatus(boolean flag) {
+        if (flag){
+            binding.includeToolbox.imgConnectionStatus.setColorFilter(Color.BLACK);
+            binding.includeToolbox.imgConnectionStatus.setImageDrawable(
+                            AppCompatResources.getDrawable(getApplicationContext(),R.drawable.ic_connected) );
+            snackBarMessage("Connected");
+            checkLedStatus();
+            return;
+        }
+        binding.includeToolbox.imgConnectionStatus.setColorFilter(Color.RED);
+        binding.includeToolbox.imgConnectionStatus.setImageDrawable(
+                AppCompatResources.getDrawable(getApplicationContext(), R.drawable.ic_disconnected) );
+        snackBarMessage("Not Connected to PineCone");
+
+
+    }
 
     void checkConnectionWithBl602() throws MalformedURLException, JSONException, ExecutionException, InterruptedException, DisconnectedException {
         isConnectedToBL602 =

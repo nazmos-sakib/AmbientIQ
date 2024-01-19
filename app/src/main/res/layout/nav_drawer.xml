@@ -10,63 +10,82 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
+
         android:background="@drawable/header_bkg"
         android:gravity="bottom"
-        android:orientation="vertical"
         android:padding="10dp"
         android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
         <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            app:srcCompat="@mipmap/ic_launcher_round" />
-
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="match_parent"
+            android:id="@+id/imageView3"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/app_name"
-            android:textColor="@color/white"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            app:srcCompat="@drawable/ic_microprocessor" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="22dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:scaleType="fitXY"
+                app:srcCompat="@drawable/ic_noun_convex_5845592" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/app_name"
+                android:textColor="@color/white"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:padding="10dp"
+        android:paddingStart="20dp"
 
         >
 
         <TextView
             android:id="@+id/textView5"
+            style="@style/NavDrawer.TxtView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/NavDrawer.TxtView"
             android:text="@string/help"
             app:drawableLeftCompat="@drawable/ic_baseline_help_24" />
 
         <TextView
             android:id="@+id/textView6"
+            style="@style/NavDrawer.TxtView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/NavDrawer.TxtView"
             android:text="@string/settings"
             app:drawableLeftCompat="@drawable/ic_baseline_settings_24" />
+
         <TextView
             android:id="@+id/textView7"
+            style="@style/NavDrawer.TxtView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/rating"
-            app:drawableLeftCompat="@drawable/ic_baseline_star_outline_24"
-            style="@style/NavDrawer.TxtView"/>
+            app:drawableLeftCompat="@drawable/ic_baseline_star_outline_24" />
+
         <TextView
             android:id="@+id/textView8"
+            style="@style/NavDrawer.TxtView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/contact_us"
-            app:drawableLeftCompat="@drawable/ic_baseline_contact_mail_24"
-            style="@style/NavDrawer.TxtView"/>
+            app:drawableLeftCompat="@drawable/ic_baseline_contact_mail_24" />
     </LinearLayout>
 </LinearLayout>
