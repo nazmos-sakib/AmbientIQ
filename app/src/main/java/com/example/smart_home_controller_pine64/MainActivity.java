@@ -14,6 +14,8 @@ import android.net.wifi.SupplicantState;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -27,6 +29,7 @@ import com.example.smart_home_controller_pine64.databinding.ActivityMainBinding;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.net.MalformedURLException;
 import java.util.Objects;
@@ -81,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
         if (wifiInfo.getSupplicantState() == SupplicantState.COMPLETED) {
             System.out.println("------------------------------------"+wifiInfo.getSSID());
             checkWifiStatus(
-                    wifiInfo.getSSID().equals("\"BL602_AP\""));
+                    wifiInfo.getSSID().equals("\"AmbientIQ\""));
         } else snackBarMessage("Not Connected to WIFI");
 
         //check led status
@@ -103,6 +106,8 @@ public class MainActivity extends AppCompatActivity {
         binding.includeToolbox.imgConnectionStatus.setImageDrawable(
                 AppCompatResources.getDrawable(getApplicationContext(), R.drawable.ic_disconnected) );
         snackBarMessage("Not Connected to PineCone");
+
+        //disable switch
 
 
     }
@@ -171,17 +176,46 @@ public class MainActivity extends AppCompatActivity {
         binding.imgTargetTempe.setOnClickListener(View->{
             setDialogTargetTempe();
         });
-        binding.swAutomate.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                binding.automationLinearLayout.setVisibility(
-                        isChecked? View.VISIBLE : View.GONE
-                );
-            }
-        });
 
-        //target temperature set value
+
+        //target humidity set value
         binding.imgTargetHumidity.setOnClickListener(View->{
             setDialogTargetHumidity();
+        });
+
+        // Automation
+        binding.swAutomate.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            final Handler handler = new Handler();
+            final Runnable run = new Runnable() {
+                @Override
+                public void run() {
+                    Log.i("run: ","a second passed by");
+                    automation();
+                    handler.postDelayed(this,5000);
+                }
+            };
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b){
+                    snackBarMessage("automated turned on");
+                    //sw disable
+                    binding.swTemperature.setEnabled(false);
+                    binding.swHumidity.setEnabled(false);
+                    //schedule task for every 5 second
+                    handler.post(run);
+                } else {
+                    snackBarMessage("automation turned off");
+                    binding.swTemperature.setEnabled(true);
+                    binding.swHumidity.setEnabled(true);
+                    handler.removeCallbacks(run);
+                    handler.post(null);
+                }
+
+                binding.automationLinearLayout.setVisibility(
+                        b? View.VISIBLE : View.GONE
+                );
+
+            }
         });
 
     }
@@ -271,6 +305,42 @@ public class MainActivity extends AppCompatActivity {
     private void closeDrawer(DrawerLayout drawerLayout){
         if (drawerLayout.isDrawerOpen(GravityCompat.START)){
             drawerLayout.closeDrawer(GravityCompat.START);
+        }
+    }
+
+    private void automation(){
+        try {
+            JSONObject jsonObject = Devices.checkLedStatus(ledStatusUrl);
+            int tempe = jsonObject.getInt("tempe");
+            int hum = jsonObject.getInt("rh");
+
+            int targetTempe = Integer.parseInt(binding.tvTargetTempe.getText().toString());
+            int targetHum = Integer.parseInt(binding.tvTargetHumidity.getText().toString());
+
+            boolean turnTempe = tempe < targetTempe;
+            boolean turnHumidity = hum < targetHum;
+
+            //change status of heater/red led
+            CommunicateWIthBl602.toggleBl602Led(
+                    ledChangeStateUrl,
+                    "red",
+                    tempe < targetTempe,
+                    getApplicationContext(),
+                    this::checkLedStatus //lambda and interface
+            );
+
+            //change status of heater/red led
+            CommunicateWIthBl602.toggleBl602Led(
+                    ledChangeStateUrl,
+                    "green",
+                    hum < targetHum,
+                    getApplicationContext(),
+                    this::checkLedStatus //lambda and interface
+            );
+
+
+        } catch (MalformedURLException | JSONException | ExecutionException | InterruptedException | DisconnectedException e) {
+            e.printStackTrace();
         }
     }
 
