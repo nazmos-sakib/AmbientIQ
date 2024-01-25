@@ -27,7 +27,9 @@ Pinecone
 
 <img src="WorkingDemo/Screenshot_20240123-132001.png" height="600">
 
-[![Watch how it works Video](https://img.youtube.com/vi/YOUTUBE_VIDEO_ID/0.jpg)](https://www.youtube.com/watch?v=YOUTUBE_VIDEO_ID)
+## Youtube Video: [Watch how it works Video]
+
+[![Video Title](https://img.youtube.com/vi/8Qv4h271Ef4/0.jpg)](https://www.youtube.com/watch?v=8Qv4h271Ef4)
 
 Android Build
 =====
